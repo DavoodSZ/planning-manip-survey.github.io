@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Opportunities and Challenges of Deep Learning in Robotic Manipulator Planning: A Survey.">
+        content="Towards Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities">
   <meta name="keywords" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Opportunities and Challenges of Deep Learning in Robotic Manipulator Planning: A Survey</title>
@@ -58,7 +58,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Opportunities and Challenges of Deep Learning in Robotic Manipulator Planning: A Survey</h1>
+          <h1 class="title is-1 publication-title">Towards Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://zh.engr.tamu.edu/people-2/">Davood Soleymanzadeh</a><sup>1</sup>,</span>
@@ -141,7 +141,7 @@
         <td>
           <br>
           <div class="columns is-centered has-text-centered">
-            <img src="./static/images/01OpeningImage.png" style="width: 40.0%;"></img>
+            <img src="./static/images/OpeningImage.png" style="width: 40.0%;"></img>
           </div>
         </td>
       </tr>
@@ -163,13 +163,15 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          Planning for robotic manipulators is complex due to the high dimensionality of the configuration space and the presence of obstacles 
-          and humans in the workspace. Deep learning methods have shown great promise in enhancing planning efficiency due to their fast inference
-          capabilities, inherent inductive biases, and proficiency in handling multi-modal distributions present in datasets. 
-          Despite such characteristics, these methods also have limitations, including the requirement for expensive datasets and challenges in 
-          generalizing to out-of-distribution settings. This paper reviews and summarizes rapidly evolving studies that leverage deep learning 
-          for motion planning of robotic manipulators, emphasizing both the benefits and limitations of these methods. This paper also explores 
-          future directions and provides guidance for researchers who intend to use these deep learning methods to solve robotic manipulator planning problems.
+          State-of-the-art generalist manipulation policies have enabled the deployment of robotic manipulators in 
+          unstructured human environments. However, these frameworks struggle in cluttered environments primarily because 
+          they utilize auxiliary modules for motion planning and control. Motion planning remains challenging due to the 
+          high dimensionality of the robot's configuration space and the presence of workspace obstacles. Neural motion 
+          planners have enhanced motion planning efficiency by offering fast inference and effectively handling the 
+          multi-modality of the motion planning problem. Despite such benefits, current neural motion planners often 
+          struggle to generalize to unseen, out-of-distribution settings. This paper reviews and analyzes the state-of-the-art 
+          neural motion planners, highlighting both their benefits and limitations. It also outlines a path toward establishing 
+          generalist neural motion planners capable of handling domain-specific challenges.
         </div>
       </div>
     </div>
