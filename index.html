@@ -1,139 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Toward Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities">
-  <meta name="keywords" content="">
+  <meta name="description" content="Towards Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities. IEEE Transactions on Automation Science and Engineering.">
+  <meta name="keywords" content="neural motion planning, robotic manipulators, survey, deep learning, motion planning, generalist planners, IEEE T-ASE">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Opportunities and Challenges of Deep Learning in Robotic Manipulator Planning: A Survey</title>
+  <title>Towards Generalist Neural Motion Planners for Robotic Manipulators</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css?v=20260702">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260702">
+  <link rel="icon" href="./static/images/favicon.svg">
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <!--<link rel="icon" href="./static/images/favicon.svg">-->
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js?v=20260702"></script>
+  <script defer src="./static/js/index.js?v=20260702"></script>
+  <script defer src="./static/js/survey.js?v=20260702"></script>
 </head>
 <body>
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow:1; justify-content:center;">
+      <a class="navbar-item" href="#"><span class="icon"><i class="fas fa-home"></i></span></a>
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#atlas">Survey Atlas</a>
+      <a class="navbar-item" href="#taxonomy">Taxonomy</a>
+      <a class="navbar-item" href="#papers">Paper Map</a>
+      <a class="navbar-item" href="#roadmap">Roadmap</a>
+      <a class="navbar-item" href="#bibtex">BibTeX</a>
+    </div>
   </div>
 </nav>
 
-
-<section class="hero">
+<section class="hero sec-white">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Toward Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities</h1>
+          <h1 class="title publication-title">
+            Towards Generalist Neural Motion Planners<br>for Robotic Manipulators
+          </h1>
+          <p class="subtitle publication-subtitle">Challenges and Opportunities</p>
+
           <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://zh.engr.tamu.edu/people-2/">Davood Soleymanzadeh</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://haosu-robotics.github.io/people">Ivan Lopez-Sanchez</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://engineering.nyu.edu/faculty/hao-su">Hao Su</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://yunzhuli.github.io/">Yunzhu Li</a><sup>3</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://engineering.tamu.edu/civil/profiles/liang-xiao.html">Xiao Liang</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://engineering.tamu.edu/mechanical/profiles/zheng-minghui.html">Minghui Zheng</a><sup>1</sup>
-            </span>
+            <span class="author-block"><a href="https://zh.engr.tamu.edu/people-2/">Davood Soleymanzadeh</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://haosu-robotics.github.io/people">Ivan Lopez-Sanchez</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://engineering.nyu.edu/faculty/hao-su">Hao Su</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://yunzhuli.github.io/">Yunzhu Li</a><sup>3</sup>,</span>
+            <span class="author-block"><a href="https://engineering.tamu.edu/civil/profiles/liang-xiao.html">Xiao Liang</a><sup>4</sup>,</span>
+            <span class="author-block"><a href="https://engineering.tamu.edu/mechanical/profiles/zheng-minghui.html">Minghui Zheng</a><sup>1</sup></span>
           </div>
 
-          <head>
-            <style>
-              .author-affiliation a{
-                color: rgb(0, 190, 20) !important; /* Change color only for links in publication authors */
-              }
-            </style>
-          </head>
-
-          <div class="is-size-5 author-affiliation">
-            <span class="author-block"><sup>1</sup> <a href="https://www.tamu.edu" target="_blank">Texas A&M University </a>,</span>
-            <span class="author-block"><sup>2</sup> <a href="https://www.nyu.edu/" target="_blank">New York University</a>,</span>
-            <span class="author-block"><sup>3</sup> <a href="https://www.columbia.edu/" target="_blank">Columbia University</a></span>
+          <div class="author-affiliation">
+            <span class="author-block"><sup>1</sup> Texas A&amp;M University, Mechanical Engineering</span>
+            <span class="author-block"><sup>2</sup> New York University</span>
+            <span class="author-block"><sup>3</sup> Columbia University</span>
+            <span class="author-block"><sup>4</sup> Texas A&amp;M University, Civil and Environmental Engineering</span>
           </div>
 
-          <div class="column has-text-centered">
+          <div style="margin-top:0.65rem;">
+            <span class="venue-badge">IEEE Transactions on Automation Science and Engineering</span>
+          </div>
+
+          <div class="column has-text-centered" style="padding-top:1.1rem; padding-bottom:0.2rem;">
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://ieeexplore.ieee.org/document/11370949"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
+                <a href="https://ieeexplore.ieee.org/document/11370949" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
                 </a>
               </span>
-              <!--<span class="link-block">
-                <a href="https://davoodsz1993.github.io/planning-manip-survey.github.io/"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>-->
-              <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/DavoodSZ1993/DeepLearning-MotionPlanning-Manipulators"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Paper List in the Survey</span>
-                  </a>
+                <a href="https://github.com/DavoodSZ1993/DeepLearning-MotionPlanning-Manipulators" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Paper List</span>
+                </a>
               </span>
-            <span class="link-block">
-              <a target="_blank" href="#BibTeX"
-                 class="external-link button is-normal is-rounded is-dark">
-                <span class="icon">
-                    <i class="fas fa-file"></i>
-                </span>
-                <span>Citation</span>
-              </a>
-            </span>
+              <span class="link-block">
+                <a href="#papers" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-map"></i></span><span>Explore</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span><span>BibTeX</span>
+                </a>
+              </span>
             </div>
+          </div>
 
+          <div class="survey-hero-card">
+            <div class="hero-copy">
+              <span class="kicker">Survey Website</span>
+              <h2>A map of how deep learning is changing manipulator motion planning.</h2>
+              <p>
+                The survey organizes neural motion planners by where learning enters the planning stack:
+                end-to-end planning, sampling, steering, trajectory optimization, and collision checking.
+              </p>
+            </div>
+            <img src="./static/images/OpeningImage.png" alt="Deep learning for robotic manipulator motion planning overview">
           </div>
         </div>
       </div>
@@ -141,212 +117,219 @@
   </div>
 </section>
 
-<!-- Opening image of the survey paper. -->
-<section, class="section">
-  <div class="columns is-centered">
-    <div class="container">
-    <div class="column is-full-width">
-      <tr>
-        <td>
-          <br>
-          <div class="columns is-centered has-text-centered">
-            <img src="./static/images/OpeningImage.png" style="width: 40.0%;"></img>
-          </div>
-        </td>
-      </tr>
-      <div class="is-vcentered interpolation-panel">
-        <div class="content has-text-centered">
-          <p style = "font-size: 14px">
-            Deep learning modules have recently been used to improve the algorithmic primitives of sampling-based
-            and global optimization trajectory planning algorithms. Figures are adopted from reviewed papers in the survey.
-        </div>
-      </div>
-      </div>
-  </div>
-  </div>
-  </section>
-
-<section class="section">
+<section class="section sec-gray" id="abstract">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          State-of-the-art generalist manipulation policies have enabled the deployment of robotic manipulators in 
-          unstructured human environments. However, these frameworks struggle in cluttered environments primarily because 
-          they utilize auxiliary modules for motion planning and control. Motion planning remains challenging due to the 
-          high dimensionality of the robot's configuration space and the presence of workspace obstacles. Neural motion 
-          planners have enhanced motion planning efficiency by offering fast inference and effectively handling the 
-          multi-modality of the motion planning problem. Despite such benefits, current neural motion planners often 
-          struggle to generalize to unseen, out-of-distribution settings. This paper reviews and analyzes the state-of-the-art 
-          neural motion planners, highlighting both their benefits and limitations. It also outlines a path toward establishing 
-          generalist neural motion planners capable of handling domain-specific challenges.
+        <h2 class="sec-heading">Abstract</h2>
+        <div class="content has-text-justified paper-copy">
+          <p>
+            State-of-the-art generalist manipulation policies have enabled robotic manipulators to operate in
+            unstructured human environments. However, these frameworks still struggle in cluttered settings because
+            they often rely on auxiliary modules for low-level motion planning and control. Motion planning remains
+            difficult due to high-dimensional configuration spaces and workspace obstacles. Neural motion planners
+            improve planning efficiency through fast inference and by modeling the multimodality of planning
+            problems, but they often struggle to generalize to unseen, out-of-distribution settings. This survey
+            reviews neural motion planners for robotic manipulators, analyzes their benefits and limitations, and
+            outlines a path toward generalist neural motion planners.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-shell reveal-block">
+      <div class="kicker">What This Survey Gives You</div>
+      <h3>From planner primitives to generalist neural planners.</h3>
+      <p class="highlight-lead">
+        Read it as an atlas: choose the planning component you care about, see what neural methods have been used,
+        and understand the remaining gap to robust deployment.
+      </p>
+      <div class="highlight-grid">
+        <div class="highlight-card primary">
+          <span class="highlight-icon"><i class="fas fa-route"></i></span>
+          <strong>Planning Stack</strong>
+          <p>Connects workspace, configuration space, sampling, steering, optimization, and collision checking.</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon"><i class="fas fa-brain"></i></span>
+          <strong>Neural Modules</strong>
+          <p>Summarizes MLPs, CNNs, transformers, GNNs, generative models, point clouds, and neural fields.</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon"><i class="fas fa-layer-group"></i></span>
+          <strong>Taxonomy</strong>
+          <p>Groups reviewed work by where learning improves the planning pipeline.</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon"><i class="fas fa-compass"></i></span>
+          <strong>Roadmap</strong>
+          <p>Highlights generalization, safety, data, benchmarking, and domain-specific deployment challenges.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!--Survey Structure-->
-<section, class="section">
-<div class="columns is-centered">
-  <div class="container">
-  <div class="column is-full-width">
-    <h2 class="title is-3", style="text-align: center;">The Struture of the Survey</h2>
-    <tr>
-      <td>
-        <br>
-        <div class="columns is-centered has-text-centered">
-          <img src="./static/images/01. SurveyStructure.png" style="width: 80.0%;"></img>
-        </div>
-      </td>
-    </tr>
-    <div class="is-vcentered interpolation-panel">
-      <div class="content has-text-centered">
-        <p style = "font-size: 14px">
-          Survey strucutre with references to the sections of the original paper. Figures are adopted from reviewed papers in the survey.
+<section class="section sec-white" id="atlas">
+  <div class="container is-max-desktop">
+    <h2 class="sec-heading">Survey Atlas</h2>
+    <div class="atlas-grid">
+      <div class="atlas-panel">
+        <div class="kicker">Structure</div>
+        <h3>How the survey is organized</h3>
+        <p>
+          The paper starts from motion planning preliminaries, then moves through classical planners, deep learning
+          modules, neural planning methods, challenges, and application domains.
         </p>
-      </div>
-    </div>
-    </div>
-</div>
-</div>
-</section>
-
-<!--Manipulation Autonomy Stack-->
-<section, class="section">
-<div class="columns is-centered">
-  <div class="container">
-  <div class="column is-full-width">
-    <h2 class="title is-3", style="text-align: center;">Planning within Manipulation Autonomy Stack</h2>
-    <tr>
-      <td>
-        <br>
-        <div class="columns is-centered has-text-centered">
-          <img src="./static/images/02. AutonomyStack.png" style="width: 50.0%;"></img>
+        <div class="atlas-steps">
+          <span>Planning preliminaries</span>
+          <span>Classical planners</span>
+          <span>Learning modules</span>
+          <span>Neural planning</span>
+          <span>Challenges</span>
+          <span>Applications</span>
         </div>
-      </td>
-    </tr>
-    <div class="is-vcentered interpolation-panel">
-      <div class="content has-text-centered">
-        <p style = "font-size: 14px">
-          A toy example of a robotic manipulator's autonomy stack. Deep learning techniques have significantly enhanced all
-          the components within this autonomy stack. The focus of this survey paper is exploring how deep learning modules 
-          have improved the motion planning sub-stack, either by improving specific components or classical motion planners or 
-          by functioning as end-to-end planners.
-        </p>
+      </div>
+      <div class="atlas-figure">
+        <img src="./static/images/01. SurveyStructure.png" alt="Survey structure">
       </div>
     </div>
-    </div>
-</div>
-</div>
-</section>
-
-<!--Planning Preliminaries and Classical Motion Planners-->
-<section class="section">
-  <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3", style="text-align: center;">Planning Preliminaries and Classical Planning Algorithms for Robotic Manipulators</h2>
-              <div class="columns">
-                  <div class="column is-centered has-text-centered">
-                    <img class="center" src="./static/images/03. PlanningDef.png" style="width: 100.0%;"></img>
-                    <p style="text-align: center; font-size: 14px">Workspace vs. configuration space for a 2-DOF planar manipulator.</p>
-                  </div>
-                  <div class="column is-centered has-text-centered">
-                    <img class="center" src="./static/images/04. SamplingPrimitives.png" style="width: 80.0%;"></img>
-                      <p style="text-align: center; font-size: 14px">Algorithmic primitives (I. Sampling, II. Steering, and III. Collision Checking)
-                        of sampling-based planning algorithms.
-                      </p>
-                  </div>
-              </div>
-              <div class="columns">
-                <div class="column is-centered has-text-centered">
-                  <img class="center" src="./static/images/05. OptimizationBased.png" style="width: 80.0%;"></img>
-                  <p style="text-align: center; font-size: 14px">An abstract illustration demonstrating how global trajectory optimization techniques
-                    rely on the initial trajectory to warm-start the optimization process. This highlights that even slightly different initializations 
-                    can lead to distinct final trajectories.
-                  </p>
-              </div>
-              <div class="column is-centered has-text-centered">
-                <img class="center" src="./static/images/06. CollisionChecking.png" style="width: 100.0%;"></img>
-                <p style="text-align: center; font-size: 14px">(a) Calculating the distance to collision via geometric collision checkers is computationally expensive. 
-                  A common practice is to utilize convex geometric primitives (e.g., spheres, cylinders) to enclose manipulator links and joints for efficient collision
-                  querying. (b) Spatial decomposition (SD) methods are commonly utilized for point-cloud
-                  processing and workspace partitioning for collision detection. Figure taken from reviewed papers in the original manuscript.</p>
-            </div>
-            </div>
-          </div>
-      </div>
   </div>
 </section>
 
-<!--DL-Modules and Their Applications in planning-->
-<section, class="section">
-<div class="columns is-centered">
-  <div class="container">
-  <div class="column is-full-width">
-    <h2 class="title is-3", style="text-align: center;">Deep Learning Basics and Potential For Robotic Manipulator Planning</h2>
-    <tr>
-      <td>
-        <br>
-        <div class="columns is-centered has-text-centered">
-          <img src="./static/images/08. MLP-CNN-RRN-GNN.png" style="width: 100.0%;"></img>
+<section class="section sec-gray" id="taxonomy">
+  <div class="container is-max-desktop">
+    <h2 class="sec-heading">Interactive Taxonomy</h2>
+    <p class="section-lead">
+      Toggle between the major layers of the survey. Each tab shows the role of the component, the relevant neural
+      methods, and the figure that best supports that part of the paper.
+    </p>
+
+    <div class="taxonomy-card reveal-block">
+      <div class="taxonomy-tabs" id="taxonomy-tabs"></div>
+      <div class="taxonomy-body">
+        <div class="taxonomy-copy">
+          <span class="kicker" id="taxonomy-kicker"></span>
+          <h3 id="taxonomy-title"></h3>
+          <p id="taxonomy-text"></p>
+          <div class="tag-list" id="taxonomy-tags"></div>
         </div>
-      </td>
-    </tr>
-    <div class="is-vcentered interpolation-panel">
-      <div class="content has-text-centered">
-        <p style = "font-size: 14px">
-          Common deep learning modules and their applications in planning (part 1).
-        </p>
+        <div class="taxonomy-visual">
+          <img id="taxonomy-image" src="./static/images/02. AutonomyStack.png" alt="">
+          <p id="taxonomy-caption"></p>
+        </div>
       </div>
     </div>
-    <tr>
-      <td>
-        <br>
-        <div class="columns is-centered has-text-centered">
-          <img src="./static/images/DGM.png" style="width: 100.0%;"></img>
-        </div>
-      </td>
-    </tr>
-    <div class="is-vcentered interpolation-panel">
-      <div class="content has-text-centered">
-        <p style = "font-size: 14px">
-          Common deep learning modules and their applications in planning (part 2).
+
+    <div class="module-card reveal-block">
+      <div class="module-copy">
+        <div class="kicker">Deep Learning Modules</div>
+        <h3>Which model family fits which planning role?</h3>
+        <p>
+          Neural planners differ less by name and more by what they represent: configuration samples, full
+          trajectories, collision proxies, distance fields, or scene-conditioned policies.
         </p>
       </div>
+      <div class="module-grid" id="module-grid"></div>
     </div>
-    </div>
-</div>
-</div>
+  </div>
 </section>
 
+<section class="section sec-white" id="papers">
+  <div class="container is-max-desktop">
+    <h2 class="sec-heading">Paper Map</h2>
+    <p class="section-lead">
+      A compact browser for representative work discussed in the survey. Use the chips to filter by planning role.
+      The full reviewed-paper list is linked from the top of the page.
+    </p>
 
-<section class="section" id="BibTeX">
+    <div class="paper-browser reveal-block">
+      <div class="paper-controls">
+        <button class="paper-filter active" type="button" data-filter="all">All</button>
+        <button class="paper-filter" type="button" data-filter="e2e">End-to-End</button>
+        <button class="paper-filter" type="button" data-filter="sampling">Sampling</button>
+        <button class="paper-filter" type="button" data-filter="steering">Steering</button>
+        <button class="paper-filter" type="button" data-filter="optimization">Optimization</button>
+        <button class="paper-filter" type="button" data-filter="collision">Collision</button>
+        <button class="paper-filter" type="button" data-filter="generalist">Generalist</button>
+      </div>
+      <input id="paper-search" class="paper-search" type="search" placeholder="Search by method, model family, or planning role">
+      <div class="paper-grid" id="paper-grid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-gray" id="roadmap">
+  <div class="container is-max-desktop">
+    <h2 class="sec-heading">Challenges and Opportunities</h2>
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <span>01</span>
+        <h3>Generalizability</h3>
+        <p>Move from narrow training distributions to unseen robots, objects, obstacles, and task contexts.</p>
+      </div>
+      <div class="roadmap-card">
+        <span>02</span>
+        <h3>Safety</h3>
+        <p>Combine fast neural inference with verifiable constraints, collision guarantees, and runtime monitors.</p>
+      </div>
+      <div class="roadmap-card">
+        <span>03</span>
+        <h3>Data and Simulation</h3>
+        <p>Scale trajectory data while reducing dependence on expensive expert planners and brittle simulators.</p>
+      </div>
+      <div class="roadmap-card">
+        <span>04</span>
+        <h3>Evaluation</h3>
+        <p>Benchmark success, planning time, cost, smoothness, safety, and out-of-distribution robustness consistently.</p>
+      </div>
+      <div class="roadmap-card">
+        <span>05</span>
+        <h3>Foundation Models</h3>
+        <p>Bridge high-level generalist policies with low-level motion generation and physical feasibility.</p>
+      </div>
+      <div class="roadmap-card">
+        <span>06</span>
+        <h3>Domain Deployment</h3>
+        <p>Adapt neural planners to healthcare, re-manufacturing, and other settings where risk and constraints matter.</p>
+      </div>
+    </div>
+
+    <div class="image-strip">
+      <div class="mini-figure">
+        <img src="./static/images/02. AutonomyStack.png" alt="Autonomy stack">
+        <p>Manipulation autonomy stack</p>
+      </div>
+      <div class="mini-figure">
+        <img src="./static/images/08. MLP-CNN-RRN-GNN.png" alt="Deep learning modules">
+        <p>Core neural modules</p>
+      </div>
+      <div class="mini-figure">
+        <img src="./static/images/DGM.png" alt="Deep generative models">
+        <p>Generative model families</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-white" id="bibtex">
   <div class="container is-max-desktop content">
-    <h2 class="title">Citation</h2>
-    <pre><code>@article{soleymanzadeh2026toward,
-  author    = {Soleymanzadeh, Davood and Lopez-Sanchez, Ivan and Su, Hao and Li, Yunzhu and Liang, Xiao and Zheng, Minghui},
-  title     = {Toward Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities},
-  journal   = {IEEE Transactions on Automation Science and Engineering},
-  year      = {2026},
+    <h2 class="sec-heading">BibTeX</h2>
+    <pre><code>@article{soleymanzadeh2026towards,
+  author  = {Soleymanzadeh, Davood and Lopez-Sanchez, Ivan and Su, Hao and Li, Yunzhu and Liang, Xiao and Zheng, Minghui},
+  title   = {Towards Generalist Neural Motion Planners for Robotic Manipulators: Challenges and Opportunities},
+  journal = {IEEE Transactions on Automation Science and Engineering},
+  year    = {2026}
 }</code></pre>
   </div>
 </section>
 
 <footer class="footer">
   <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p> Website borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> under a <a
-              href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
-              International</a>
-          </p>
-
-        </div>
-      </div>
+    <div class="content has-text-centered">
+      <p>
+        Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>.
+      </p>
     </div>
   </div>
 </footer>
