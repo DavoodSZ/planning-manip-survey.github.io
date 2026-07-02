@@ -2,6 +2,7 @@ body {
   font-family: 'Noto Sans', sans-serif;
   color: #20242c;
   background: #fff;
+  overflow-x: hidden;
 }
 
 a { color: #2d6cdf; }
@@ -28,6 +29,7 @@ a:hover { text-decoration: underline; }
   line-height: 1.25;
   color: #101318;
   margin-bottom: 0.25rem;
+  max-width: 100%;
 }
 .publication-subtitle {
   font-family: 'Google Sans', sans-serif;
@@ -64,6 +66,13 @@ a:hover { text-decoration: underline; }
   border: 0;
   box-shadow: 0 3px 10px rgba(0,0,0,0.16);
 }
+.publication-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+.publication-links .link-block { display: inline-flex; }
 .publication-links .button:hover {
   transform: translateY(-1px);
   text-decoration: none;
@@ -610,7 +619,43 @@ pre {
 }
 
 @media (max-width: 560px) {
-  .publication-title { font-size: 1.55rem; }
+  .container,
+  .columns,
+  .column {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .hero-body { padding-left: 1rem; padding-right: 1rem; }
+  .publication-title {
+    font-size: 1.35rem;
+    overflow-wrap: anywhere;
+    width: calc(100vw - 2rem) !important;
+    max-width: calc(100vw - 2rem) !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .publication-links {
+    width: calc(100vw - 2rem) !important;
+    max-width: calc(100vw - 2rem) !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .publication-links .button { max-width: calc(100vw - 2rem); }
+  .survey-hero-card img,
+  .atlas-figure img,
+  .taxonomy-visual img,
+  .mini-figure img {
+    max-width: 100%;
+    height: auto;
+  }
+  .survey-hero-card,
+  .atlas-grid,
+  .taxonomy-card,
+  .module-card,
+  .paper-browser {
+    width: calc(100vw - 2rem) !important;
+    max-width: calc(100vw - 2rem) !important;
+  }
   .highlight-grid,
   .module-grid,
   .tree-paper-list,
