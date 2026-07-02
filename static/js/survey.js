@@ -81,92 +81,24 @@
     ["Generative Models", "VAE, GAN, flow, diffusion, and flow matching models for multimodal samples or trajectories."]
   ];
 
-  var papers = [
-    {
-      title: "PCNet-style end-to-end planners",
-      meta: "End-to-End Planning",
-      category: "e2e",
-      tags: ["PCNet", "point clouds", "trajectory"],
-      text: "Directly predict motion plans from scene representations, often trading explicit search for fast inference."
-    },
-    {
-      title: "Motion Planning Networks",
-      meta: "Neural Informed Sampling",
-      category: "sampling",
-      tags: ["MPNet", "sampling", "planner primitive"],
-      text: "Use learned representations to guide sampling-based planners toward promising regions of configuration space."
-    },
-    {
-      title: "VAE-informed samplers",
-      meta: "Generative Sampling",
-      category: "sampling",
-      tags: ["VAE", "multimodal", "samples"],
-      text: "Model distributions over useful samples or paths for informed exploration in difficult planning problems."
-    },
-    {
-      title: "Normalizing-flow samplers",
-      meta: "Generative Sampling",
-      category: "sampling",
-      tags: ["flow", "density", "informed sampling"],
-      text: "Use invertible generative models to learn complex sampling distributions for motion planning."
-    },
-    {
-      title: "Learned steering functions",
-      meta: "Sampling-Based Primitive",
-      category: "steering",
-      tags: ["MLP", "local planner", "edge"],
-      text: "Replace or assist the local steering primitive that connects two configurations in a planning tree."
-    },
-    {
-      title: "Warm-started trajectory optimization",
-      meta: "Optimization",
-      category: "optimization",
-      tags: ["MLP", "warm start", "cost"],
-      text: "Use neural networks to initialize or accelerate optimization-based planners while preserving downstream refinement."
-    },
-    {
-      title: "Diffusion and generative optimizers",
-      meta: "Optimization",
-      category: "optimization",
-      tags: ["diffusion", "trajectory", "constraints"],
-      text: "Generate candidate trajectories or optimize under learned costs, often requiring collision-aware guidance or validation."
-    },
-    {
-      title: "GNN collision checking",
-      meta: "Collision Querying",
-      category: "collision",
-      tags: ["GNN", "collision", "graphs"],
-      text: "Learn graph-based collision or edge-validity proxies to reduce expensive geometric checking."
-    },
-    {
-      title: "Neural SDF and distance fields",
-      meta: "Collision Querying",
-      category: "collision",
-      tags: ["SDF", "distance", "neural field"],
-      text: "Represent proximity and collision information with learned continuous fields for faster planning queries."
-    },
-    {
-      title: "Generalist neural motion planners",
-      meta: "Future Direction",
-      category: "generalist",
-      tags: ["generalization", "foundation models", "OOD"],
-      text: "Aim to scale from task-specific neural planners to robust planners that generalize across robots, scenes, and domains."
-    },
-    {
-      title: "Constraint-aware neural planning",
-      meta: "Safety",
-      category: "generalist",
-      tags: ["safety", "constraints", "validation"],
-      text: "Combines neural proposal generation with explicit constraints, verification, runtime monitors, or safety filters."
-    },
-    {
-      title: "Point-cloud conditioned planning",
-      meta: "End-to-End Planning",
-      category: "e2e",
-      tags: ["PCNet", "scene geometry", "robot geometry"],
-      text: "Uses point cloud encoders to reason about geometry while avoiding handcrafted environment abstractions."
-    }
-  ];
+  var README_URL = "https://raw.githubusercontent.com/DavoodSZ1993/DeepLearning-MotionPlanning-Manipulators/main/README.md";
+  var fallbackMarkdown = [
+    "## End-to-end Planning",
+    "- PCNets: **Motion policy networks**, 2023, [Paper Link](https://proceedings.mlr.press/v205/fishman23a/fishman23a.pdf).",
+    "- PCNets: **Neural mp: A generalist neural motion planner**, 2024,[Paper Link](https://arxiv.org/abs/2409.05864).",
+    "## Sampling-based Motion Planning",
+    "### Sampling Primitive",
+    "- MLPs: **Motion planning networks**, 2019, [Paper Link](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8793889).",
+    "- GNNs: **SIMPNet: Spatial-Informed Motion Planning Network**, 2024, [Paper Link](https://arxiv.org/pdf/2408.12831).",
+    "### Steering Primitive",
+    "- MLPs: **Fast deep swept volume estimator**, 2021, [Paper Link](https://journals.sagepub.com/doi/pdf/10.1177/0278364920940781).",
+    "## Constrained Sampling-based Motion Planning",
+    "- MLPs: **Learning equality constraints for motion planning on manifolds**, 2021, [Paper Link](https://proceedings.mlr.press/v155/sutanto21a/sutanto21a.pdf).",
+    "## Trajectory Optimization",
+    "- DGMs - DMs: **Motion planning diffusion: Learning and planning of robot motions with diffusion models**, 2023, [Paper Link](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10342382).",
+    "## Collision Checking",
+    "- GNNs: **GraphDistNet: A graph-based collision-distance estimator for gradient-based trajectory optimization**, 2022, [Paper Link](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9851942)."
+  ].join("\n");
 
   function el(tag, cls, text) {
     var node = document.createElement(tag);
@@ -219,38 +151,134 @@
     });
   }
 
-  function mountPapers() {
-    var grid = document.getElementById("paper-grid");
-    var search = document.getElementById("paper-search");
-    var filters = document.querySelectorAll(".paper-filter");
-    if (!grid || !search) return;
-    var current = "all";
+  function parsePaperMarkdown(markdown) {
+    var start = markdown.indexOf("## End-to-end Planning");
+    var end = markdown.indexOf("# Acknowledgement");
+    var body = markdown.slice(start > -1 ? start : 0, end > -1 ? end : markdown.length);
+    var tree = [];
+    var currentSection = null;
+    var currentSubsection = null;
 
-    function matches(paper, query) {
-      var text = [paper.title, paper.meta, paper.text].concat(paper.tags).join(" ").toLowerCase();
-      return text.indexOf(query) !== -1;
+    function ensureSubsection(section, title) {
+      var key = title || "Papers";
+      var found = section.children.find(function (child) { return child.title === key; });
+      if (!found) {
+        found = { title: key, papers: [] };
+        section.children.push(found);
+      }
+      return found;
     }
 
-    function render() {
-      var query = search.value.trim().toLowerCase();
-      grid.innerHTML = "";
-      var shown = papers.filter(function (paper) {
-        return (current === "all" || paper.category === current) && matches(paper, query);
-      });
-      if (!shown.length) {
-        grid.appendChild(el("div", "paper-empty", "No matching papers in this compact browser."));
-        return;
+    body.split(/\r?\n/).forEach(function (line) {
+      var sectionMatch = line.match(/^##\s+(.+)/);
+      var subsectionMatch = line.match(/^###\s+(.+)/);
+      var paperMatch = line.match(/^-\s*([^:]+):\s*\*\*(.*?)\*\*,?\s*(.*?)(?:,?\s*\[Paper\s*Link\]\((.*?)\)|,?\s*\[PaperLink\]\((.*?)\)|\.\s*\[Paper\s*Link\]\((.*?)\))/);
+      if (sectionMatch) {
+        currentSection = { title: sectionMatch[1].trim(), children: [] };
+        tree.push(currentSection);
+        currentSubsection = null;
+      } else if (subsectionMatch && currentSection) {
+        currentSubsection = ensureSubsection(currentSection, subsectionMatch[1].trim());
+      } else if (paperMatch && currentSection) {
+        var venueYear = paperMatch[3].replace(/\s+/g, " ").replace(/,$/, "").trim();
+        var yearMatch = venueYear.match(/\b(19|20)\d{2}\b/);
+        var paper = {
+          family: paperMatch[1].trim(),
+          title: paperMatch[2].trim(),
+          year: yearMatch ? yearMatch[0] : "",
+          meta: venueYear,
+          link: paperMatch[4] || paperMatch[5] || paperMatch[6] || ""
+        };
+        ensureSubsection(currentSection, currentSubsection ? currentSubsection.title : "Papers").papers.push(paper);
       }
-      shown.forEach(function (paper) {
-        var card = el("article", "paper-card");
-        card.appendChild(el("div", "paper-meta", paper.meta));
-        card.appendChild(el("h3", "", paper.title));
-        card.appendChild(el("p", "", paper.text));
-        var tags = el("div", "tag-list");
-        paper.tags.forEach(function (tag) { tags.appendChild(el("span", "paper-tag", tag)); });
-        card.appendChild(tags);
-        grid.appendChild(card);
+    });
+    return tree;
+  }
+
+  function countPapers(tree) {
+    return tree.reduce(function (sum, section) {
+      return sum + section.children.reduce(function (inner, child) { return inner + child.papers.length; }, 0);
+    }, 0);
+  }
+
+  function paperMatches(paper, section, child, query) {
+    var text = [paper.title, paper.family, paper.year, paper.meta, section.title, child.title].join(" ").toLowerCase();
+    return text.indexOf(query) !== -1;
+  }
+
+  function mountPapers() {
+    var treeRoot = document.getElementById("paper-tree");
+    var summary = document.getElementById("paper-tree-summary");
+    var search = document.getElementById("paper-search");
+    var filters = document.querySelectorAll(".paper-filter");
+    var expand = document.getElementById("expand-tree");
+    var collapse = document.getElementById("collapse-tree");
+    if (!treeRoot || !summary || !search) return;
+    var current = "all";
+    var paperTree = [];
+
+    function renderTree() {
+      var query = search.value.trim().toLowerCase();
+      treeRoot.innerHTML = "";
+      var visibleCount = 0;
+
+      paperTree.forEach(function (section) {
+        if (current !== "all" && section.title !== current) return;
+        var sectionDetails = el("details", "tree-section");
+        sectionDetails.open = query || current !== "all";
+        var sectionCount = section.children.reduce(function (sum, child) { return sum + child.papers.length; }, 0);
+        sectionDetails.appendChild(el("summary", "", section.title + " (" + sectionCount + ")"));
+
+        section.children.forEach(function (child) {
+          var papers = child.papers.filter(function (paper) {
+            return !query || paperMatches(paper, section, child, query);
+          });
+          if (!papers.length) return;
+          visibleCount += papers.length;
+
+          var childDetails = el("details", "tree-subsection");
+          childDetails.open = query || child.papers.length < 8;
+          childDetails.appendChild(el("summary", "", child.title + " (" + papers.length + ")"));
+
+          var list = el("div", "tree-paper-list");
+          papers.forEach(function (paper) {
+            var row = el("article", "tree-paper");
+            var title = paper.link ? el("a", "tree-paper-title", paper.title) : el("span", "tree-paper-title", paper.title);
+            if (paper.link) {
+              title.href = paper.link;
+              title.target = "_blank";
+              title.rel = "noopener";
+            }
+            row.appendChild(title);
+            var meta = el("div", "tree-paper-meta");
+            meta.appendChild(el("span", "paper-tag", paper.family));
+            if (paper.year) meta.appendChild(el("span", "paper-tag", paper.year));
+            row.appendChild(meta);
+            list.appendChild(row);
+          });
+          childDetails.appendChild(list);
+          sectionDetails.appendChild(childDetails);
+        });
+
+        if (sectionDetails.querySelector(".tree-paper")) treeRoot.appendChild(sectionDetails);
       });
+
+      summary.textContent = visibleCount
+        ? "Showing " + visibleCount + " reviewed papers from " + countPapers(paperTree) + " total."
+        : "No papers match the current search/filter.";
+    }
+
+    function loadTree() {
+      fetch(README_URL)
+        .then(function (response) {
+          if (!response.ok) throw new Error("README fetch failed");
+          return response.text();
+        })
+        .catch(function () { return fallbackMarkdown; })
+        .then(function (markdown) {
+          paperTree = parsePaperMarkdown(markdown);
+          renderTree();
+        });
     }
 
     filters.forEach(function (btn) {
@@ -258,11 +286,17 @@
         filters.forEach(function (el) { el.classList.remove("active"); });
         btn.classList.add("active");
         current = btn.getAttribute("data-filter");
-        render();
+        renderTree();
       });
     });
-    search.addEventListener("input", render);
-    render();
+    search.addEventListener("input", renderTree);
+    if (expand) expand.addEventListener("click", function () {
+      treeRoot.querySelectorAll("details").forEach(function (detail) { detail.open = true; });
+    });
+    if (collapse) collapse.addEventListener("click", function () {
+      treeRoot.querySelectorAll("details").forEach(function (detail) { detail.open = false; });
+    });
+    loadTree();
   }
 
   document.addEventListener("DOMContentLoaded", function () {

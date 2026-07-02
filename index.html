@@ -239,22 +239,26 @@
   <div class="container is-max-desktop">
     <h2 class="sec-heading">Paper Map</h2>
     <p class="section-lead">
-      A compact browser for representative work discussed in the survey. Use the chips to filter by planning role.
-      The full reviewed-paper list is linked from the top of the page.
+      An expandable tree of the reviewed papers, organized using the taxonomy from Section V of the survey.
+      Search by title, model family, year, or planning role.
     </p>
 
     <div class="paper-browser reveal-block">
       <div class="paper-controls">
         <button class="paper-filter active" type="button" data-filter="all">All</button>
-        <button class="paper-filter" type="button" data-filter="e2e">End-to-End</button>
-        <button class="paper-filter" type="button" data-filter="sampling">Sampling</button>
-        <button class="paper-filter" type="button" data-filter="steering">Steering</button>
-        <button class="paper-filter" type="button" data-filter="optimization">Optimization</button>
-        <button class="paper-filter" type="button" data-filter="collision">Collision</button>
-        <button class="paper-filter" type="button" data-filter="generalist">Generalist</button>
+        <button class="paper-filter" type="button" data-filter="End-to-end Planning">End-to-End</button>
+        <button class="paper-filter" type="button" data-filter="Sampling-based Motion Planning">Sampling</button>
+        <button class="paper-filter" type="button" data-filter="Constrained Sampling-based Motion Planning">Constrained</button>
+        <button class="paper-filter" type="button" data-filter="Trajectory Optimization">Optimization</button>
+        <button class="paper-filter" type="button" data-filter="Collision Checking">Collision</button>
       </div>
-      <input id="paper-search" class="paper-search" type="search" placeholder="Search by method, model family, or planning role">
-      <div class="paper-grid" id="paper-grid"></div>
+      <div class="paper-tree-toolbar">
+        <input id="paper-search" class="paper-search" type="search" placeholder="Search all reviewed papers">
+        <button id="expand-tree" class="tree-action" type="button">Expand all</button>
+        <button id="collapse-tree" class="tree-action" type="button">Collapse all</button>
+      </div>
+      <div class="paper-tree-summary" id="paper-tree-summary">Loading reviewed-paper tree...</div>
+      <div class="paper-tree" id="paper-tree"></div>
     </div>
   </div>
 </section>
